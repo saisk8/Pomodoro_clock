@@ -2,6 +2,10 @@ h1 {
     padding: 2rem;
 }
 
+h3 {
+    font-weight: normal;
+}
+
 .timer {
     font-size: 8rem;
     font-style: normal;
