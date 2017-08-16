@@ -20,17 +20,25 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                if (sessionLen < 5) {
-                    sessionLen = 5;
+                if (sessionLen < 25) {
+                    sessionLen = 25;
                 }
                 $("#sdisplay")
                     .text(sessionLen);
+                $("#timer")
+                    .text(sessionLen + ":00");
             });
         $("#splus")
             .click(function() {
                 sessionLen += 1;
                 $("#sdisplay")
                     .text(sessionLen);
+                $("#timer")
+                    .text(sessionLen + ":00");
+            });
+        $("#setter")
+            .click(function() {
+
             });
 
     });
