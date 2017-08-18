@@ -2,6 +2,40 @@ $(document)
     .ready(function() {
         var sessionLen = 25;
         var breakLen = 5;
+        var clock_pause = false;
+        var ticks = false;
+        var id;
+
+        function startClock() {
+            var start = Date.now(),
+                diff, minutes, seconds;
+
+            function countDownTimer() {
+                console.log("Here");
+                diff = sessionLen - (((Date.now() - start) / 1000) | 0);
+
+                minutes = (diff % 60) | 0;
+                seconds = (diff / 60) | 0;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                $("#timer")
+                    .text(minutes + ":" + seconds);
+
+                if (diff <= 0) {
+                    clearInterval(id);
+                }
+
+            }
+            countDownTimer();
+            id = setInterval(countDownTimer(), 1000);
+            console.log(id);
+        }
+
+        function pauseClock() {
+            clearInterval(id);
+        }
         $("#bplus")
             .click(function() {
                 breakLen += 1;
@@ -38,7 +72,16 @@ $(document)
             });
         $("#setter")
             .click(function() {
-
+                if ($("#setter")
+                    .text() === "Start") {
+                    startClock();
+                    $("#setter")
+                        .text("Pause");
+                } else if ($("#setter")
+                    .text() === "Pause") {
+                    //pauseClock();
+                    $("#setter")
+                        .text("Start");
+                }
             });
-
     });
