@@ -8,20 +8,21 @@ $(document)
 
         function startClock() {
             var start = Date.now(),
-                diff, minutes, seconds;
+                diff, minutes, seconds, str,
+                duration = sessionLen * 60;
 
             function countDownTimer() {
                 console.log("Here");
-                diff = sessionLen - (((Date.now() - start) / 1000) | 0);
+                diff = duration - (((Date.now() - start) / 1000) | 0);
 
-                minutes = (diff % 60) | 0;
-                seconds = (diff / 60) | 0;
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
 
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
+                str = minutes + ":" + seconds;
                 $("#timer")
-                    .text(minutes + ":" + seconds);
+                    .text(str);
 
                 if (diff <= 0) {
                     clearInterval(id);
@@ -29,7 +30,7 @@ $(document)
 
             }
             countDownTimer();
-            id = setInterval(countDownTimer(), 1000);
+            id = setInterval(countDownTimer, 1000);
             console.log(id);
         }
 
