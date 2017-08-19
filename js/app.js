@@ -11,6 +11,14 @@ $(document)
             var start = Date.now(),
                 minutes, seconds, str;
             ticks = true;
+            $("#bplus")
+                .prop("disabled", true);
+            $("#bminus")
+                .prop("disabled", true);
+            $("#sminus")
+                .prop("disabled", true);
+            $("#splus")
+                .prop("disabled", true);
 
             function countDownTimer() {
                 diff = duration - (((Date.now() - start) / 1000) | 0);
@@ -40,6 +48,14 @@ $(document)
             console.log(diff);
             ticks = false;
             clearInterval(id);
+            $("#bplus")
+                .prop("disabled", false);
+            $("#bminus")
+                .prop("disabled", false);
+            $("#sminus")
+                .prop("disabled", false);
+            $("#splus")
+                .prop("disabled", false);
         }
 
         $("#bplus")
@@ -80,7 +96,7 @@ $(document)
             .click(function() {
                 if ($("#setter")
                     .text() === "Start") {
-                    if (!ticks && !clockPause) {
+                    if ((!ticks && !clockPause) || diff == 0) {
                         var duration = sessionLen * 60;
                         startClock(duration);
                     } else {
