@@ -16,6 +16,7 @@ h3 {
     cursor: pointer;
 }
 
-button {
-    outline: none;
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: 0 !important;
+    box-shadow: none;
 }

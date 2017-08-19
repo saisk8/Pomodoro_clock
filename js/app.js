@@ -76,9 +76,9 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                // if (sessionLen < 25) {
-                //     sessionLen = 25;
-                // }
+                if (sessionLen < 25) {
+                    sessionLen = 25;
+                }
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
