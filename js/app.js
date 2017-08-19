@@ -1,15 +1,16 @@
 $(document)
     .ready(function() {
-        var sessionLen = 25;
+        var sessionLen = 1;
         var breakLen = 5;
         var clock_pause = false;
         var ticks = false;
         var id;
+        var diff;
 
-        function startClock() {
+        function startClock(duration) {
             var start = Date.now(),
-                diff, minutes, seconds, str,
-                duration = sessionLen * 60;
+                minutes, seconds, str;
+            ticks = true;
 
             function countDownTimer() {
                 console.log("Here");
@@ -26,6 +27,8 @@ $(document)
 
                 if (diff <= 0) {
                     clearInterval(id);
+                    console.log(diff);
+                    ticks = false;
                 }
 
             }
@@ -35,8 +38,10 @@ $(document)
         }
 
         function pauseClock() {
+            ticks = false;
             clearInterval(id);
         }
+
         $("#bplus")
             .click(function() {
                 breakLen += 1;
@@ -61,7 +66,7 @@ $(document)
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
-                    .text(sessionLen + ":00");
+                    .text((sessionLen < 10 ? "0" + sessionLen : sessionLen) + ":00");
             });
         $("#splus")
             .click(function() {
@@ -69,18 +74,21 @@ $(document)
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
-                    .text(sessionLen + ":00");
+                    .text((sessionLen < 10 ? "0" + sessionLen : sessionLen) + ":00");
             });
         $("#setter")
             .click(function() {
                 if ($("#setter")
                     .text() === "Start") {
-                    startClock();
+                    if (!ticks) {
+                        var duration = sessionLen * 60;
+                        startClock(duration);
+                    }
                     $("#setter")
                         .text("Pause");
                 } else if ($("#setter")
                     .text() === "Pause") {
-                    //pauseClock();
+                    pauseClock();
                     $("#setter")
                         .text("Start");
                 }
