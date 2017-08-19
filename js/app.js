@@ -2,7 +2,7 @@ $(document)
     .ready(function() {
         var sessionLen = 1;
         var breakLen = 5;
-        var clock_pause = false;
+        var clockPause = false;
         var ticks = false;
         var id;
         var diff;
@@ -13,7 +13,6 @@ $(document)
             ticks = true;
 
             function countDownTimer() {
-                console.log("Here");
                 diff = duration - (((Date.now() - start) / 1000) | 0);
 
                 minutes = (diff / 60) | 0;
@@ -38,6 +37,7 @@ $(document)
         }
 
         function pauseClock() {
+            console.log(diff);
             ticks = false;
             clearInterval(id);
         }
@@ -60,9 +60,9 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                if (sessionLen < 25) {
-                    sessionLen = 25;
-                }
+                // if (sessionLen < 25) {
+                //     sessionLen = 25;
+                // }
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
@@ -80,14 +80,17 @@ $(document)
             .click(function() {
                 if ($("#setter")
                     .text() === "Start") {
-                    if (!ticks) {
+                    if (!ticks && !clockPause) {
                         var duration = sessionLen * 60;
                         startClock(duration);
+                    } else {
+                        startClock(diff);
                     }
                     $("#setter")
                         .text("Pause");
                 } else if ($("#setter")
                     .text() === "Pause") {
+                    clockPause = true;
                     pauseClock();
                     $("#setter")
                         .text("Start");
