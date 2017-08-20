@@ -4,6 +4,7 @@ $(document)
         var breakLen = 5;
         var clockPause = false;
         var ticks = false;
+        var breakClock = false;
         var id;
         var diff;
 
@@ -36,6 +37,11 @@ $(document)
                     clearInterval(id);
                     console.log(diff);
                     ticks = false;
+                    if (breakClock) {
+                        //goodJob();
+                    } else {
+                        startClock((breakLen * 60));
+                    }
                 }
 
             }
