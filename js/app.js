@@ -7,11 +7,15 @@ $(document)
         var breakClock = false;
         var id;
         var diff;
+        var progress;
 
-        function startClock(duration) {
+        function startClock(duration, p) {
             var start = Date.now(),
-                minutes, seconds, str;
+                minutes, seconds, str,
+                progress_inc = !breakClock ? (100 / (sessionLen * 60)) : (100 / (breakLen * 60));
+            progress = p;
             ticks = true;
+            console.log(progress_inc);
             $("#bplus")
                 .prop("disabled", true);
             $("#bminus")
@@ -20,10 +24,25 @@ $(document)
                 .prop("disabled", true);
             $("#splus")
                 .prop("disabled", true);
+            console.log(breakClock);
+            if (breakClock) {
+                $("#bar")
+                    .removeClass("bg-success")
+                    .addClass("bg-danger");
+
+            } else {
+                $("#bar")
+                    .removeClass("bg-danger")
+                    .addClass("bg-success");
+
+            }
 
             function countDownTimer() {
                 diff = duration - (((Date.now() - start) / 1000) | 0);
-
+                $("#bar")
+                    .css("width", progress + "%");
+                progress += progress_inc;
+                console.log(progress + "%");
                 minutes = (diff / 60) | 0;
                 seconds = (diff % 60) | 0;
 
@@ -36,10 +55,14 @@ $(document)
                 if (diff <= 0) {
                     clearInterval(id);
                     console.log(diff);
+                    $("#bar")
+                        .css("width", "100%");
                     ticks = false;
                     if (breakClock) {
-                        //goodJob();
+                        breakClock = false;
+                        startClock((sessionLen * 60));
                     } else {
+                        breakClock = true;
                         startClock((breakLen * 60));
                     }
                 }
@@ -82,9 +105,9 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                if (sessionLen < 25) {
-                    sessionLen = 25;
-                }
+                // if (sessionLen < 25) {
+                //     sessionLen = 25;
+                // }
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
@@ -104,9 +127,9 @@ $(document)
                     .text() === "Start") {
                     if ((!ticks && !clockPause) || diff == 0) {
                         var duration = sessionLen * 60;
-                        startClock(duration);
+                        startClock(duration, 0);
                     } else {
-                        startClock(diff);
+                        startClock(diff, progress);
                     }
                     $("#setter")
                         .text("Pause");
