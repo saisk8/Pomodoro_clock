@@ -29,12 +29,10 @@ $(document)
                 $("#bar")
                     .removeClass("bg-success")
                     .addClass("bg-danger");
-
             } else {
                 $("#bar")
                     .removeClass("bg-danger")
                     .addClass("bg-success");
-
             }
 
             function countDownTimer() {
@@ -60,10 +58,10 @@ $(document)
                     ticks = false;
                     if (breakClock) {
                         breakClock = false;
-                        startClock((sessionLen * 60));
+                        startClock((sessionLen * 60), 0);
                     } else {
                         breakClock = true;
-                        startClock((breakLen * 60));
+                        startClock((breakLen * 60), 0);
                     }
                 }
 
