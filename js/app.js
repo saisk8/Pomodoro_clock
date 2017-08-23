@@ -41,9 +41,15 @@ $(document)
                     ticks = false;
                     if (breakClock) {
                         breakClock = false;
+                        $("#type")
+                            .text("Session");
+                        audio.play();
                         startClock((sessionLen * 60));
                     } else {
                         breakClock = true;
+                        $("#type")
+                            .text("Break");
+                        audio.play();
                         startClock((breakLen * 60));
                     }
                 }
@@ -114,12 +120,35 @@ $(document)
                     }
                     $("#setter")
                         .text("Pause");
+                    $("#setter")
+                        .removeClass("btn-outline-primary");
+                    $("#setter")
+                        .addClass("btn-outline-warning");
                 } else if ($("#setter")
                     .text() === "Pause") {
                     clockPause = true;
                     pauseClock();
                     $("#setter")
                         .text("Start");
+                    $("#setter")
+                        .removeClass("btn-outline-warning");
+                    $("#setter")
+                        .addClass("btn-outline-primary");
+                }
+            });
+        $("#reset")
+            .click(function() {
+                if (clockPause) {
+                    breakClock = false;
+                    clockPause = false;
+                    ticks = false;
+                    $("#setter")
+                        .text("Pause");
+                    $("#setter")
+                        .removeClass("btn-outline-primary");
+                    $("#setter")
+                        .addClass("btn-outline-warning");
+                    startClock(sessionLen * 60);
                 }
             });
     });
