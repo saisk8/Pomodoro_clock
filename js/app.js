@@ -1,21 +1,17 @@
 $(document)
     .ready(function() {
-        var sessionLen = 1;
+        var sessionLen = 25;
         var breakLen = 5;
         var clockPause = false;
         var ticks = false;
         var breakClock = false;
         var id;
         var diff;
-        var progress;
 
-        function startClock(duration, p) {
+        function startClock(duration) {
             var start = Date.now(),
-                minutes, seconds, str,
-                progress_inc = !breakClock ? (100 / (sessionLen * 60)) : (100 / (breakLen * 60));
-            progress = p;
+                minutes, seconds, str;
             ticks = true;
-            console.log(progress_inc);
             $("#bplus")
                 .prop("disabled", true);
             $("#bminus")
@@ -24,23 +20,10 @@ $(document)
                 .prop("disabled", true);
             $("#splus")
                 .prop("disabled", true);
-            console.log(breakClock);
-            if (breakClock) {
-                $("#bar")
-                    .removeClass("bg-success")
-                    .addClass("bg-danger");
-            } else {
-                $("#bar")
-                    .removeClass("bg-danger")
-                    .addClass("bg-success");
-            }
 
             function countDownTimer() {
                 diff = duration - (((Date.now() - start) / 1000) | 0);
-                $("#bar")
-                    .css("width", progress + "%");
-                progress += progress_inc;
-                console.log(progress + "%");
+
                 minutes = (diff / 60) | 0;
                 seconds = (diff % 60) | 0;
 
@@ -58,10 +41,10 @@ $(document)
                     ticks = false;
                     if (breakClock) {
                         breakClock = false;
-                        startClock((sessionLen * 60), 0);
+                        startClock((sessionLen * 60));
                     } else {
                         breakClock = true;
-                        startClock((breakLen * 60), 0);
+                        startClock((breakLen * 60));
                     }
                 }
 
@@ -94,8 +77,8 @@ $(document)
         $("#bminus")
             .click(function() {
                 breakLen -= 1;
-                if (breakLen < 5) {
-                    breakLen = 5;
+                if (breakLen < 1) {
+                    breakLen = 1;
                 }
                 $("#bdisplay")
                     .text(breakLen);
@@ -103,9 +86,9 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                // if (sessionLen < 25) {
-                //     sessionLen = 25;
-                // }
+                if (sessionLen < 1) {
+                    sessionLen = 1;
+                }
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
@@ -125,9 +108,9 @@ $(document)
                     .text() === "Start") {
                     if ((!ticks && !clockPause) || diff == 0) {
                         var duration = sessionLen * 60;
-                        startClock(duration, 0);
+                        startClock(duration);
                     } else {
-                        startClock(diff, progress);
+                        startClock(diff);
                     }
                     $("#setter")
                         .text("Pause");
