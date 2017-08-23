@@ -1,6 +1,6 @@
 $(document)
     .ready(function() {
-        var sessionLen = 1;
+        var sessionLen = 25;
         var breakLen = 5;
         var clockPause = false;
         var ticks = false;
@@ -94,8 +94,8 @@ $(document)
         $("#bminus")
             .click(function() {
                 breakLen -= 1;
-                if (breakLen < 5) {
-                    breakLen = 5;
+                if (breakLen < 1) {
+                    breakLen = 1;
                 }
                 $("#bdisplay")
                     .text(breakLen);
@@ -103,9 +103,9 @@ $(document)
         $("#sminus")
             .click(function() {
                 sessionLen -= 1;
-                // if (sessionLen < 25) {
-                //     sessionLen = 25;
-                // }
+                if (sessionLen < 1) {
+                    sessionLen = 1;
+                }
                 $("#sdisplay")
                     .text(sessionLen);
                 $("#timer")
