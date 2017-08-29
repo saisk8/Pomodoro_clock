@@ -34,19 +34,15 @@ $(document)
                 if (diff <= 0) {
                     clearInterval(id);
                     console.log(diff);
-                    $("#bar")
-                        .css("width", "100%");
                     if (breakClock) {
                         breakClock = false;
                         $("#type")
                             .text("Session");
-                        audio.play();
                         startClock((sessionLen * 60));
                     } else {
                         breakClock = true;
                         $("#type")
                             .text("Break");
-                        audio.play();
                         startClock((breakLen * 60));
                     }
                 }
