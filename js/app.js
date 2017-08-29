@@ -3,7 +3,6 @@ $(document)
         var sessionLen = 25;
         var breakLen = 5;
         var clockPause = false;
-        var ticks = false;
         var breakClock = false;
         var id;
         var diff;
@@ -11,7 +10,6 @@ $(document)
         function startClock(duration) {
             var start = Date.now(),
                 minutes, seconds, str;
-            ticks = true;
             $("#bplus")
                 .prop("disabled", true);
             $("#bminus")
@@ -38,7 +36,6 @@ $(document)
                     console.log(diff);
                     $("#bar")
                         .css("width", "100%");
-                    ticks = false;
                     if (breakClock) {
                         breakClock = false;
                         $("#type")
@@ -62,7 +59,6 @@ $(document)
 
         function pauseClock() {
             console.log(diff);
-            ticks = false;
             clearInterval(id);
             $("#bplus")
                 .prop("disabled", false);
@@ -112,7 +108,8 @@ $(document)
             .click(function() {
                 if ($("#setter")
                     .text() === "Start") {
-                    if ((!ticks && !clockPause) || diff == 0) {
+                        console.log(clockPause);
+                    if ((!clockPause) || diff == 0) {
                         var duration = sessionLen * 60;
                         startClock(duration);
                     } else {
@@ -141,13 +138,13 @@ $(document)
                 if (clockPause) {
                     breakClock = false;
                     clockPause = false;
-                    ticks = false;
                     $("#setter")
                         .text("Pause");
                     $("#setter")
                         .removeClass("btn-outline-primary");
                     $("#setter")
                         .addClass("btn-outline-warning");
+                    clearInterval(id);
                     startClock(sessionLen * 60);
                 }
             });
