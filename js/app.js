@@ -141,7 +141,16 @@ $(document)
                     $("#setter")
                         .addClass("btn-outline-warning");
                     clearInterval(id);
-                    startClock(sessionLen * 60);
+                    $("#timer")
+                        .text((sessionLen < 10 ? "0" + sessionLen : sessionLen) + ":00");
+                    $("#setter")
+                        .text("Start");
+                    $("#setter")
+                        .removeClass("btn-outline-warning");
+                    $("#setter")
+                        .addClass("btn-outline-primary");
+                    $("#type")
+                        .text("Session");
                 }
             });
     });
