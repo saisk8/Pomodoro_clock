@@ -19,6 +19,11 @@ $(document)
             $("#splus")
                 .prop("disabled", true);
 
+            function playSound() {
+                var audio = new Audio("./alarm.mp3");
+                audio.play();
+            }
+
             function countDownTimer() {
                 diff = duration - (((Date.now() - start) / 1000) | 0);
 
@@ -33,7 +38,7 @@ $(document)
 
                 if (diff <= 0) {
                     clearInterval(id);
-                    console.log(diff);
+                    playSound();
                     if (breakClock) {
                         breakClock = false;
                         $("#type")
@@ -50,7 +55,6 @@ $(document)
             }
             countDownTimer();
             id = setInterval(countDownTimer, 1000);
-            console.log(id);
         }
 
         function pauseClock() {
@@ -104,7 +108,6 @@ $(document)
             .click(function() {
                 if ($("#setter")
                     .text() === "Start") {
-                        console.log(clockPause);
                     if ((!clockPause) || diff == 0) {
                         var duration = sessionLen * 60;
                         startClock(duration);
